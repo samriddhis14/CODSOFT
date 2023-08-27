@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .calculator {
+      max-width: 300px;
+      margin: 0 auto;
+      background-color: #ddd;
+      border-radius: 5px;
+      padding: 20px;
+    }
+
+    #display {
+      text-align: right;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div id="display">0</div>
+    <div class="buttons">
+      <button onclick="appendToDisplay('7')">7</button>
+      <button onclick="appendToDisplay('8')">8</button>
+      <button onclick="appendToDisplay('9')">9</button>
+      <button onclick="operate('+')">+</button>
+      <button onclick="appendToDisplay('4')">4</button>
+      <button onclick="appendToDisplay('5')">5</button>
+      <button onclick="appendToDisplay('6')">6</button>
+      <button onclick="operate('-')">-</button>
+      <button onclick="appendToDisplay('1')">1</button>
+      <button onclick="appendToDisplay('2')">2</button>
+      <button onclick="appendToDisplay('3')">3</button>
+      <button onclick="operate('*')">*</button>
+      <button onclick="appendToDisplay('0')">0</button>
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="operate('/')">/</button>
+    </div>
+  </div>
+
+  <script>
+    let currentInput = "";
+    let firstOperand = "";
+    let operator = "";
+    const display = document.getElementById("display");
+
+    function appendToDisplay(value) {
+      currentInput += value;
+      display.textContent = currentInput;
+    }
+
+    function operate(op) {
+      if (currentInput !== "") {
+        firstOperand = currentInput;
+        operator = op;
+        currentInput = "";
+      }
+    }
+
+    function clearDisplay() {
+      currentInput = "";
+      firstOperand = "";
+      operator = "";
+      display.textContent = "0";
+    }
+
+    function calculate() {
+      if (firstOperand !== "" && operator !== "" && currentInput !== "") {
+        const num1 = parseFloat(firstOperand);
+        const num2 = parseFloat(currentInput);
+        let result = 0;
+        
+        switch (operator) {
+          case '+':
+            result = num1 + num2;
+            break;
+          case '-':
+            result = num1 - num2;
+            break;
+          case '*':
+            result = num1 * num2;
+            break;
+          case '/':
+            result = num1 / num2;
+            break;
+        }
+        
+        currentInput = result.toString();
+        display.textContent = currentInput;
+        firstOperand = "";
+        operator = "";
+      }
+    }
+  </script>
+</body>
+</html>
